@@ -1,0 +1,21 @@
+GERAR UM ARQUIVO FAT JAR (.jar) DA API
+
+1º passo
+- botão direito em cima do nome do projeto
+- opção run as -> maven build...
+
+2º passo - tela do Maven Build
+- digitar "clean package" no campo "Goals"
+este comando irá limpar a aplicação e empacotá-la, 
+gerando o .jar
+- clicar em run
+
+3º dentro da pasta "target" serão gerados várias
+pastas e arquivos, inclusive o fat jar (.jar).
+
+PARA RODAR O ARQUIVO FAT JAR (.jar)
+
+- abrir o terminal e acessar a pasta "target"
+- copiar o nome do arquivo fatjar que foi gerado
+- digitar java -jar "nome do arquivo"
+- será iniciada a aplicação.
