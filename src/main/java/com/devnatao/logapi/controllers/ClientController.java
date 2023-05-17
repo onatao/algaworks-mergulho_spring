@@ -1,7 +1,9 @@
 package com.devnatao.logapi.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,12 +14,12 @@ import com.devnatao.logapi.domain.model.ClientEntity;
 @RestController
 @RequestMapping("/clientes")
 public class ClientController {
+	
+	@PersistenceContext
+	private EntityManager manager;
 
 	@GetMapping
 	public List<ClientEntity> listar() {
-		List<ClientEntity> list = new ArrayList<>();
-		list.add(new ClientEntity(1L, "Nathan", "a", "b"));
-		list.add(new ClientEntity(2L, "Arthur", "a", "b"));
-		return list;
+		return manager.createQuery("from ClientEntity", ClientEntity.class).getResultList();
 	}
 }
