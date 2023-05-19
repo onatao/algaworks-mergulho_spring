@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice	
 public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
+	/**
+	 *  MessageSource is one Spring Framework interface to resolve messages
+	 *  will insert the custom message write on messages.properties
+	 */
+	@Autowired
+	private MessageSource messageSource;
+	
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -29,8 +39,8 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 		for (ObjectError error: ex.getBindingResult().getAllErrors()) {
 			// Obtaining field(error) name
 			String fieldName = ((FieldError) error).getField();
-			// getting default error message
-			String errorMessage = error.getDefaultMessage();
+			// getting default error message - LocalContextHolder.getLocal() set process localization as locale
+			String errorMessage = messageSource.getMessage(error, LocaleContextHolder.getLocale());
 			// adding on fields list
 			fields.add(new Exception.Field(fieldName, errorMessage));
 		}
@@ -38,7 +48,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 		Exception exception = new Exception();
 		exception.setStatus(status.value());
 		exception.setMoment(LocalDateTime.now());
-		exception.setTitle("Campos preenchidos invalidamente!");
+		exception.setTitle("Preencha os campos corretamente.");
 		// adding fiels list (created on Exception.class)
 		exception.setFields(fields);
 		return handleExceptionInternal(ex, exception, headers, status, request);
