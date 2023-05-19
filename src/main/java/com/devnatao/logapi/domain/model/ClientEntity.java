@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "client")
@@ -15,8 +18,15 @@ public class ClientEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotBlank // will not accept null or " "
+	@Size(max = 60) // same value as db
 	private String name;
+	@NotBlank 
+	@Email // verify the syntax of email
+	@Size(max = 255)
 	private String email;
+	@NotBlank
+	@Size(max = 20)
 	private String phone;
 	
 	public ClientEntity() {}
