@@ -1,5 +1,6 @@
 # algaworks-mergulho_spring
 Repositório referente ao evento Mergulho Spring REST promovido pela AlgaWorks.
+Projeto realizado na versão 2.7.11 do Spring Boot
 
 ## Diagrama de classes utlizado no projeto
 ![diagrama de classes](assets/image/diagrama-de-classes.png)
